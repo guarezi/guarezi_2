@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee+Tint&display=swap" rel="stylesheet">
+    <title>Consulta CEP</title>
+    <script>
+        function pesquisaCep(cep) {
+            let validaCep = /^[0-9]{8}$/;
+
+            if (validaCep.test(cep)) {
+                var script = document.createElement('script');
+                script.src = 'https://viacep.com.br/ws/' + cep + '/json/?callback=preenche_cep';
+                document.body.appendChild(script);
+            } else {
+                erro.textContent = "CEP digitado corretamente!";
+                document.getElementById("cep").value = "";
+            }
+        }
+
+        function preenche_cep(conteudo) {
+            document.getElementById("rua").value = conteudo.logradouro;
+            document.getElementById("bairro").value = conteudo.bairro;
+            document.getElementById("cidade").value = conteudo.localidade;
+            document.getElementById("uf").value = conteudo.uf;
+        }
+    </script>
+</head>
+
+<body>
+    <header>
+    </header>
+    <main>
+        <form>
+            <label for="cep">CEP:</label>
+            <input type="text" id="cep" onblur="pesquisaCep(this.value)" required>
+            <p id="erro"></p>
+
+            <label for="rua">Rua:</label>
+            <input type="text" id="rua" required>
+
+            <label for="numero">Número:</label>
+            <input type="text" id="numero" required>
+            
+            <label for="bairro">Bairro:</label>
+            <input type="text" id="bairro" required>
+
+            <label for="cidade">Cidade:</label>
+            <input type="text" id="cidade" required>
+
+            <label for="uf">Uf:</label>
+            <input type="text" id="uf" required>
+        </form>
+    </main>
+</body>
+
+</html>
